@@ -11,16 +11,16 @@
  * @param geometry Vector of Point representing the geometry.
  * @return Vector of doubles containing {minx, maxx, miny, maxy}.
  */
-std::vector<double> calculateBoundingBox(const std::vector<Point>& geometry) {
+std::vector<double> calculateBoundingBox(const Polygon& geometry) {
     // Initialize the coordinates vector
     std::vector<double> coords;
 
     // Set initial min and max values using the first vertex
-    double minx = geometry[0].x, maxx = geometry[0].x;
-    double miny = geometry[0].y, maxy = geometry[0].y;
+    double minx = geometry.vertices[0].x, maxx = geometry.vertices[0].x;
+    double miny = geometry.vertices[0].y, maxy = geometry.vertices[0].y;
 
     // Iterate through the array using references
-    for (const auto& vertex : geometry) {
+    for (const auto& vertex : geometry.vertices) {
         minx = (vertex.x < minx) ? vertex.x : minx;
         maxx = (vertex.x > maxx) ? vertex.x : maxx;
         miny = (vertex.y < miny) ? vertex.y : miny;

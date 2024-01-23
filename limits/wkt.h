@@ -15,10 +15,10 @@
  * @param wkt The Well-Known Text representation of a polygon.
  * @return A vector of points representing the coordinates of the polygon.
  */
-std::vector<Point> wktToCoordinates(const std::string &wkt)
+Polygon wktToCoordinates(const std::string &wkt)
 {
     // Create a vector to store the coordinates (points) of the polygon
-    std::vector<Point> coordinates;
+    Polygon coordinates;
 
     // Find the start and end positions of the coordinate information in the WKT
     size_t start = wkt.find("(") + 2;
@@ -30,7 +30,7 @@ std::vector<Point> wktToCoordinates(const std::string &wkt)
 
     // Count the number of commas to determine the required capacity
     size_t commaCount = std::count(wkt.begin(), wkt.end(), ',') + 1;
-    coordinates.reserve(commaCount / 2 + 1);
+    coordinates.vertices.reserve(commaCount / 2 + 1);
 
     // Tokenize the cleaned WKT and extract individual points
     while (std::getline(iss, token, ','))
@@ -43,7 +43,7 @@ std::vector<Point> wktToCoordinates(const std::string &wkt)
         pointStream >> vertex.x >> vertex.y;
 
         // Add the vertex to the vector of coordinates
-        coordinates.emplace_back(vertex);
+        coordinates.vertices.emplace_back(vertex);
     }
 
     // Return the vector of coordinates representing the polygon
